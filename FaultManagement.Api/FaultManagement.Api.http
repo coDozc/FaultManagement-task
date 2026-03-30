@@ -1,0 +1,6 @@
+@FaultManagement.Api_HostAddress = http://localhost:5155
+
+GET {{FaultManagement.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
