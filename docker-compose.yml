@@ -21,6 +21,8 @@ services:
       dockerfile: Dockerfile
     container_name: fault-management-api
     environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5155
       - ConnectionStrings__DefaultConnection=Server=sql-server,1433;Database=LotusTaskDb;User Id=sa;Password=YourSecurePassword123!;TrustServerCertificate=True;
       - Jwt__SecretKey=your-super-secret-key-min-32-characters-long-please
       - Jwt__Issuer=FaultManagement
