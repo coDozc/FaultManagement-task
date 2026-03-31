@@ -37,7 +37,7 @@ public class FaultNotification
         CreatedAtUtc = DateTime.UtcNow;
     }
 
-    // Constructor for seeding with specific ID and Status
+    //specific data
     public FaultNotification(
         Guid id,
         string title,

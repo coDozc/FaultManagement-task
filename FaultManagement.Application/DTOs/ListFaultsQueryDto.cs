@@ -9,5 +9,5 @@ public class ListFaultsQueryDto
     public FaultStatus? Status { get; set; }
     public PriorityLevel? Priority { get; set; }
     public string? LocationFilter { get; set; }
-    public string? SortBy { get; set; } = "createdAt"; // "priority" or "createdAt"
+    public string? SortBy { get; set; } = "createdAt";
 }

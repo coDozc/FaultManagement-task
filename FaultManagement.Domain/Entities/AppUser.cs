@@ -25,7 +25,6 @@ public class AppUser
         CreatedAtUtc = DateTime.UtcNow;
     }
 
-    // Constructor for seeding with specific ID
     public AppUser(Guid id, string userName, string email, string passwordHash, UserRole role)
     {
         Id = id;
