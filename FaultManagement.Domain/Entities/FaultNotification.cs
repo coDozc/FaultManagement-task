@@ -6,13 +6,13 @@ namespace FaultManagement.Domain.Entities;
 
 public class FaultNotification
 {
-    public Guid Id { get; init; }
+    public int Id { get; init; }
     public string Title { get; private set; } = string.Empty;
     public string Description { get; private set; } = string.Empty;
     public string Location { get; private set; } = string.Empty;
     public PriorityLevel Priority { get; private set; }
     public FaultStatus Status { get; private set; }
-    public Guid CreatedByUserId { get; private set; }
+    public int CreatedByUserId { get; private set; }
     public DateTime CreatedAtUtc { get; private set; }
     public DateTime? UpdatedAtUtc { get; private set; }
 
@@ -25,9 +25,8 @@ public class FaultNotification
         string description,
         string location,
         PriorityLevel priority,
-        Guid createdByUserId)
+        int createdByUserId)
     {
-        Id = Guid.NewGuid();
         Title = title;
         Description = description;
         Location = location;
@@ -37,15 +36,15 @@ public class FaultNotification
         CreatedAtUtc = DateTime.UtcNow;
     }
 
-    //specific data
+    // Constructor for seeding with specific ID and Status
     public FaultNotification(
-        Guid id,
+        int id,
         string title,
         string description,
         string location,
         PriorityLevel priority,
         FaultStatus status,
-        Guid createdByUserId)
+        int createdByUserId)
     {
         Id = id;
         Title = title;

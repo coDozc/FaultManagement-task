@@ -28,7 +28,7 @@ public class FaultsController : ControllerBase
     [ProducesResponseType(typeof(ApiResponse<FaultNotificationDto>), StatusCodes.Status201Created)]
     public async Task<IActionResult> CreateFault([FromBody] CreateFaultNotificationDto dto)
     {
-        var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? Guid.Empty.ToString());
+        var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0");
 
         _logger.LogInformation("Creating fault for user: {UserId}", userId);
 
@@ -89,7 +89,7 @@ public class FaultsController : ControllerBase
         var userRole = User.FindFirst(ClaimTypes.Role)?.Value;
         if (userRole == "User")
         {
-            var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? Guid.Empty.ToString());
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0");
             query = query.Where(f => f.CreatedByUserId == userId);
         }
 
@@ -114,7 +114,7 @@ public class FaultsController : ControllerBase
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(ApiResponse<FaultNotificationDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetFault(Guid id)
+    public async Task<IActionResult> GetFault(int id)
     {
         var fault = await _context.FaultNotifications.FindAsync(id);
 
@@ -124,7 +124,7 @@ public class FaultsController : ControllerBase
         }
 
         var userRole = User.FindFirst(ClaimTypes.Role)?.Value;
-        var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? Guid.Empty.ToString());
+        var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0");
 
         if (userRole == "User" && fault.CreatedByUserId != userId)
         {
@@ -138,7 +138,7 @@ public class FaultsController : ControllerBase
     [HttpPatch("{id}/status")]
     [Authorize(Policy = "AdminOnly")]
     [ProducesResponseType(typeof(ApiResponse<FaultNotificationDto>), StatusCodes.Status200OK)]
-    public async Task<IActionResult> ChangeStatus(Guid id, [FromBody] ChangeFaultStatusDto dto)
+    public async Task<IActionResult> ChangeStatus(int id, [FromBody] ChangeFaultStatusDto dto)
     {
         var fault = await _context.FaultNotifications.FindAsync(id);
 

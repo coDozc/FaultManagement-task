@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FaultManagement.Infrastructure.Migrations
 {
     [DbContext(typeof(FaultManagementDbContext))]
-    [Migration("20260330135100_InitialCreate")]
+    [Migration("20260331141431_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -27,9 +27,11 @@ namespace FaultManagement.Infrastructure.Migrations
 
             modelBuilder.Entity("FaultManagement.Domain.Entities.AppUser", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAtUtc")
                         .HasColumnType("datetime2");
@@ -64,19 +66,19 @@ namespace FaultManagement.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("10000000-0000-0000-0000-000000000001"),
-                            CreatedAtUtc = new DateTime(2026, 3, 30, 13, 50, 59, 505, DateTimeKind.Utc).AddTicks(8113),
+                            Id = 1,
+                            CreatedAtUtc = new DateTime(2026, 3, 31, 14, 14, 30, 796, DateTimeKind.Utc).AddTicks(6382),
                             Email = "admin@example.com",
-                            PasswordHash = "$2a$11$23sv2SqJqbPL1f.JF3S0NOEn42k1qoZl1ePTXdxT934oi0MDrHzsG",
+                            PasswordHash = "$2a$11$qkdMlWcYwk.Y.oSlnLpbOuDkBdmHo0UClJ67infR.ETB5HONJ47Mu",
                             Role = 1,
                             UserName = "admin"
                         },
                         new
                         {
-                            Id = new Guid("20000000-0000-0000-0000-000000000001"),
-                            CreatedAtUtc = new DateTime(2026, 3, 30, 13, 50, 59, 632, DateTimeKind.Utc).AddTicks(7072),
+                            Id = 2,
+                            CreatedAtUtc = new DateTime(2026, 3, 31, 14, 14, 30, 925, DateTimeKind.Utc).AddTicks(5526),
                             Email = "user@example.com",
-                            PasswordHash = "$2a$11$sLhoAJr70lMO7IjeKWb6tOqH1n1a.zVUx3kELSt4dyn/2/QYramEi",
+                            PasswordHash = "$2a$11$/cXoAT99P0Q3GtEUeIr3IeUf8.Zt1LQE/IyBQoynSqD.1FTgHpNDC",
                             Role = 2,
                             UserName = "user"
                         });
@@ -84,15 +86,17 @@ namespace FaultManagement.Infrastructure.Migrations
 
             modelBuilder.Entity("FaultManagement.Domain.Entities.FaultNotification", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAtUtc")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("CreatedByUserId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("CreatedByUserId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -131,9 +135,9 @@ namespace FaultManagement.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("00001001-0000-0000-0000-000000000001"),
-                            CreatedAtUtc = new DateTime(2026, 3, 30, 13, 50, 59, 632, DateTimeKind.Utc).AddTicks(8626),
-                            CreatedByUserId = new Guid("20000000-0000-0000-0000-000000000001"),
+                            Id = 1,
+                            CreatedAtUtc = new DateTime(2026, 3, 31, 14, 14, 30, 925, DateTimeKind.Utc).AddTicks(7408),
+                            CreatedByUserId = 2,
                             Description = "Description for fault notification 1",
                             Location = "Ankara",
                             Priority = 1,
@@ -142,9 +146,9 @@ namespace FaultManagement.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("00001002-0000-0000-0000-000000000001"),
-                            CreatedAtUtc = new DateTime(2026, 3, 30, 13, 50, 59, 632, DateTimeKind.Utc).AddTicks(8654),
-                            CreatedByUserId = new Guid("20000000-0000-0000-0000-000000000001"),
+                            Id = 2,
+                            CreatedAtUtc = new DateTime(2026, 3, 31, 14, 14, 30, 925, DateTimeKind.Utc).AddTicks(7427),
+                            CreatedByUserId = 2,
                             Description = "Description for fault notification 2",
                             Location = "Izmir",
                             Priority = 2,
@@ -153,9 +157,9 @@ namespace FaultManagement.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("00001003-0000-0000-0000-000000000001"),
-                            CreatedAtUtc = new DateTime(2026, 3, 30, 13, 50, 59, 632, DateTimeKind.Utc).AddTicks(8661),
-                            CreatedByUserId = new Guid("20000000-0000-0000-0000-000000000001"),
+                            Id = 3,
+                            CreatedAtUtc = new DateTime(2026, 3, 31, 14, 14, 30, 925, DateTimeKind.Utc).AddTicks(7430),
+                            CreatedByUserId = 2,
                             Description = "Description for fault notification 3",
                             Location = "Bursa",
                             Priority = 3,
@@ -164,9 +168,9 @@ namespace FaultManagement.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("00001004-0000-0000-0000-000000000001"),
-                            CreatedAtUtc = new DateTime(2026, 3, 30, 13, 50, 59, 632, DateTimeKind.Utc).AddTicks(8676),
-                            CreatedByUserId = new Guid("20000000-0000-0000-0000-000000000001"),
+                            Id = 4,
+                            CreatedAtUtc = new DateTime(2026, 3, 31, 14, 14, 30, 925, DateTimeKind.Utc).AddTicks(7433),
+                            CreatedByUserId = 2,
                             Description = "Description for fault notification 4",
                             Location = "Antalya",
                             Priority = 1,
@@ -175,9 +179,9 @@ namespace FaultManagement.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("00001005-0000-0000-0000-000000000001"),
-                            CreatedAtUtc = new DateTime(2026, 3, 30, 13, 50, 59, 632, DateTimeKind.Utc).AddTicks(8682),
-                            CreatedByUserId = new Guid("20000000-0000-0000-0000-000000000001"),
+                            Id = 5,
+                            CreatedAtUtc = new DateTime(2026, 3, 31, 14, 14, 30, 925, DateTimeKind.Utc).AddTicks(7435),
+                            CreatedByUserId = 2,
                             Description = "Description for fault notification 5",
                             Location = "Gaziantep",
                             Priority = 2,
@@ -186,9 +190,9 @@ namespace FaultManagement.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("00001006-0000-0000-0000-000000000001"),
-                            CreatedAtUtc = new DateTime(2026, 3, 30, 13, 50, 59, 632, DateTimeKind.Utc).AddTicks(8694),
-                            CreatedByUserId = new Guid("20000000-0000-0000-0000-000000000001"),
+                            Id = 6,
+                            CreatedAtUtc = new DateTime(2026, 3, 31, 14, 14, 30, 925, DateTimeKind.Utc).AddTicks(7588),
+                            CreatedByUserId = 2,
                             Description = "Description for fault notification 6",
                             Location = "Konya",
                             Priority = 3,
@@ -197,9 +201,9 @@ namespace FaultManagement.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("00001007-0000-0000-0000-000000000001"),
-                            CreatedAtUtc = new DateTime(2026, 3, 30, 13, 50, 59, 632, DateTimeKind.Utc).AddTicks(8803),
-                            CreatedByUserId = new Guid("20000000-0000-0000-0000-000000000001"),
+                            Id = 7,
+                            CreatedAtUtc = new DateTime(2026, 3, 31, 14, 14, 30, 925, DateTimeKind.Utc).AddTicks(7598),
+                            CreatedByUserId = 2,
                             Description = "Description for fault notification 7",
                             Location = "Kayseri",
                             Priority = 1,
@@ -208,9 +212,9 @@ namespace FaultManagement.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("00001008-0000-0000-0000-000000000001"),
-                            CreatedAtUtc = new DateTime(2026, 3, 30, 13, 50, 59, 632, DateTimeKind.Utc).AddTicks(8824),
-                            CreatedByUserId = new Guid("20000000-0000-0000-0000-000000000001"),
+                            Id = 8,
+                            CreatedAtUtc = new DateTime(2026, 3, 31, 14, 14, 30, 925, DateTimeKind.Utc).AddTicks(7612),
+                            CreatedByUserId = 2,
                             Description = "Description for fault notification 8",
                             Location = "Istanbul",
                             Priority = 2,
@@ -219,9 +223,9 @@ namespace FaultManagement.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("00001009-0000-0000-0000-000000000001"),
-                            CreatedAtUtc = new DateTime(2026, 3, 30, 13, 50, 59, 632, DateTimeKind.Utc).AddTicks(8830),
-                            CreatedByUserId = new Guid("20000000-0000-0000-0000-000000000001"),
+                            Id = 9,
+                            CreatedAtUtc = new DateTime(2026, 3, 31, 14, 14, 30, 925, DateTimeKind.Utc).AddTicks(7615),
+                            CreatedByUserId = 2,
                             Description = "Description for fault notification 9",
                             Location = "Ankara",
                             Priority = 3,
@@ -230,9 +234,9 @@ namespace FaultManagement.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("00001010-0000-0000-0000-000000000001"),
-                            CreatedAtUtc = new DateTime(2026, 3, 30, 13, 50, 59, 632, DateTimeKind.Utc).AddTicks(8878),
-                            CreatedByUserId = new Guid("20000000-0000-0000-0000-000000000001"),
+                            Id = 10,
+                            CreatedAtUtc = new DateTime(2026, 3, 31, 14, 14, 30, 925, DateTimeKind.Utc).AddTicks(7620),
+                            CreatedByUserId = 2,
                             Description = "Description for fault notification 10",
                             Location = "Izmir",
                             Priority = 1,
@@ -241,9 +245,9 @@ namespace FaultManagement.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("00001011-0000-0000-0000-000000000001"),
-                            CreatedAtUtc = new DateTime(2026, 3, 30, 13, 50, 59, 632, DateTimeKind.Utc).AddTicks(8885),
-                            CreatedByUserId = new Guid("20000000-0000-0000-0000-000000000001"),
+                            Id = 11,
+                            CreatedAtUtc = new DateTime(2026, 3, 31, 14, 14, 30, 925, DateTimeKind.Utc).AddTicks(7623),
+                            CreatedByUserId = 2,
                             Description = "Description for fault notification 11",
                             Location = "Bursa",
                             Priority = 2,
@@ -252,9 +256,9 @@ namespace FaultManagement.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("00001012-0000-0000-0000-000000000001"),
-                            CreatedAtUtc = new DateTime(2026, 3, 30, 13, 50, 59, 632, DateTimeKind.Utc).AddTicks(8895),
-                            CreatedByUserId = new Guid("20000000-0000-0000-0000-000000000001"),
+                            Id = 12,
+                            CreatedAtUtc = new DateTime(2026, 3, 31, 14, 14, 30, 925, DateTimeKind.Utc).AddTicks(7625),
+                            CreatedByUserId = 2,
                             Description = "Description for fault notification 12",
                             Location = "Antalya",
                             Priority = 3,
@@ -263,9 +267,9 @@ namespace FaultManagement.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("00001013-0000-0000-0000-000000000001"),
-                            CreatedAtUtc = new DateTime(2026, 3, 30, 13, 50, 59, 632, DateTimeKind.Utc).AddTicks(8916),
-                            CreatedByUserId = new Guid("20000000-0000-0000-0000-000000000001"),
+                            Id = 13,
+                            CreatedAtUtc = new DateTime(2026, 3, 31, 14, 14, 30, 925, DateTimeKind.Utc).AddTicks(7628),
+                            CreatedByUserId = 2,
                             Description = "Description for fault notification 13",
                             Location = "Gaziantep",
                             Priority = 1,
@@ -274,9 +278,9 @@ namespace FaultManagement.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("00001014-0000-0000-0000-000000000001"),
-                            CreatedAtUtc = new DateTime(2026, 3, 30, 13, 50, 59, 632, DateTimeKind.Utc).AddTicks(8922),
-                            CreatedByUserId = new Guid("20000000-0000-0000-0000-000000000001"),
+                            Id = 14,
+                            CreatedAtUtc = new DateTime(2026, 3, 31, 14, 14, 30, 925, DateTimeKind.Utc).AddTicks(7630),
+                            CreatedByUserId = 2,
                             Description = "Description for fault notification 14",
                             Location = "Konya",
                             Priority = 2,
@@ -285,9 +289,9 @@ namespace FaultManagement.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("00001015-0000-0000-0000-000000000001"),
-                            CreatedAtUtc = new DateTime(2026, 3, 30, 13, 50, 59, 632, DateTimeKind.Utc).AddTicks(8935),
-                            CreatedByUserId = new Guid("20000000-0000-0000-0000-000000000001"),
+                            Id = 15,
+                            CreatedAtUtc = new DateTime(2026, 3, 31, 14, 14, 30, 925, DateTimeKind.Utc).AddTicks(7686),
+                            CreatedByUserId = 2,
                             Description = "Description for fault notification 15",
                             Location = "Kayseri",
                             Priority = 3,

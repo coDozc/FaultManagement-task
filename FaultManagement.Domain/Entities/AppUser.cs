@@ -4,7 +4,7 @@ namespace FaultManagement.Domain.Entities;
 
 public class AppUser
 {
-    public Guid Id { get; init; }
+    public int Id { get; init; }
     public string UserName { get; private set; } = string.Empty;
     public string Email { get; private set; } = string.Empty;
     public string PasswordHash { get; private set; } = string.Empty;
@@ -17,7 +17,6 @@ public class AppUser
 
     public AppUser(string userName, string email, string passwordHash, UserRole role)
     {
-        Id = Guid.NewGuid();
         UserName = userName;
         Email = email;
         PasswordHash = passwordHash;
@@ -25,7 +24,7 @@ public class AppUser
         CreatedAtUtc = DateTime.UtcNow;
     }
 
-    public AppUser(Guid id, string userName, string email, string passwordHash, UserRole role)
+    public AppUser(int id, string userName, string email, string passwordHash, UserRole role)
     {
         Id = id;
         UserName = userName;

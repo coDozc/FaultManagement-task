@@ -50,18 +50,15 @@ public class FaultManagementDbContext : DbContext
 
     private static void SeedData(ModelBuilder modelBuilder)
     {
-        var adminId = Guid.Parse("10000000-0000-0000-0000-000000000001");
-        var userId = Guid.Parse("20000000-0000-0000-0000-000000000001");
-
         var adminUser = new AppUser(
-            adminId,
+            1,
             "admin",
             "admin@example.com",
             BCrypt.Net.BCrypt.HashPassword("admin123"),
             UserRole.Admin);
 
         var normalUser = new AppUser(
-            userId,
+            2,
             "user",
             "user@example.com",
             BCrypt.Net.BCrypt.HashPassword("user123"),
@@ -78,13 +75,13 @@ public class FaultManagementDbContext : DbContext
         for (int i = 1; i <= 15; i++)
         {
             var notification = new FaultNotification(
-                Guid.Parse($"{1000 + i:00000000}-0000-0000-0000-000000000001"),
+                i,
                 $"Fault #{i}",
                 $"Description for fault notification {i}",
                 locations[i % locations.Length],
                 priorities[(i - 1) % priorities.Length],
                 statuses[(i - 1) % statuses.Length],
-                userId);
+                2); // createdByUserId = 2 (normal user)
 
             faultNotifications.Add(notification);
         }
