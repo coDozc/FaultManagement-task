@@ -297,6 +297,71 @@ Response format:
 - Password reset özelliği yok
 - Real-time notification yok
 
+## Docker Deployment (BONUS)
+
+### Ön Koşullar
+
+- Docker Desktop installed
+- Docker Compose
+
+### Adımlar
+
+1. **Docker Image'ı Build Et ve Container'ları Başlat:**
+   ```bash
+   docker-compose up -d
+   ```
+
+   Bu komut:
+   - SQL Server 2022 container'ını başlatır
+   - .NET 8 API container'ını derler ve başlatır
+   - Otomatik migration'ı çalıştırır
+
+2. **API'ye Erişim:**
+   ```
+   Swagger: http://localhost:5155/swagger/index.html
+   API Base: http://localhost:5155/api
+   ```
+
+3. **Logs Kontrol Et:**
+   ```bash
+   docker-compose logs -f api
+   docker-compose logs -f sql-server
+   ```
+
+4. **Container'ları Durdur:**
+   ```bash
+   docker-compose down
+   ```
+
+5. **Veritabanını Sil ve Yeniden Başla:**
+   ```bash
+   docker-compose down -v
+   docker-compose up -d
+   ```
+
+### Ortam Değişkenleri
+
+`docker-compose.yml`'de aşağıdaki değişkenleri özel ihtiyaçlarınız için değiştirebilirsiniz:
+
+```yaml
+environment:
+  - ConnectionStrings__DefaultConnection=... # SQL Server bağlantısı
+  - Jwt__SecretKey=... # JWT secret key
+  - Jwt__ExpirationMinutes=60 # Token süresi
+  - RateLimit__RequestLimit=10 # Max istek
+  - RateLimit__WindowInSeconds=60 # Kaç saniye
+```
+
+### Network
+
+- Container'lar `fault-network` bridge network üzerinde çalışır
+- SQL Server: `sql-server:1433` (container içinde)
+- API: `http://api:5155` (container içinde)
+
+### Volume
+
+- `mssql_data`: SQL Server verilerini persistent olarak depolar
+
 ## Lisans
 
 MIT

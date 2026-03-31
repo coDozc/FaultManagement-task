@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  sql-server:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: fault-management-db
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: "YourSecurePassword123!"
+      MSSQL_PID: Developer
+    ports:
+      - "1433:1433"
+    volumes:
+      - mssql_data:/var/opt/mssql
+    networks:
+      - fault-network
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: fault-management-api
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=sql-server,1433;Database=LotusTaskDb;User Id=sa;Password=YourSecurePassword123!;TrustServerCertificate=True;
+      - Jwt__SecretKey=your-super-secret-key-min-32-characters-long-please
+      - Jwt__Issuer=FaultManagement
+      - Jwt__Audience=FaultManagementUsers
+      - Jwt__ExpirationMinutes=60
+      - RateLimit__RequestLimit=10
+      - RateLimit__WindowInSeconds=60
+    ports:
+      - "5155:5155"
+    depends_on:
+      - sql-server
+    networks:
+      - fault-network
+
+networks:
+  fault-network:
+    driver: bridge
+
+volumes:
+  mssql_data:

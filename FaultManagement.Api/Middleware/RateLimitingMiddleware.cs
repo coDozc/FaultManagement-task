@@ -41,18 +41,26 @@ public class RateLimitingMiddleware
 
         var requestLog = RequestLogs.GetOrAdd(key, _ => new RequestLog { LastResetTime = now });
 
-        if ((now - requestLog.LastResetTime).TotalSeconds >= _options.WindowInSeconds)
+        bool rateLimitExceeded = false;
+        lock (requestLog)
         {
-            requestLog.Count = 0;
-            requestLog.LastResetTime = now;
+            if ((now - requestLog.LastResetTime).TotalSeconds >= _options.WindowInSeconds)
+            {
+                requestLog.Count = 0;
+                requestLog.LastResetTime = now;
+            }
+
+            requestLog.Count++;
+
+            if (requestLog.Count > _options.RequestLimit)
+            {
+                rateLimitExceeded = true;
+            }
         }
 
-        requestLog.Count++;
-
-        if (requestLog.Count > _options.RequestLimit)
+        if (rateLimitExceeded)
         {
-            _logger.LogWarning("Rate limit exceeded for IP: {IpAddress}, Requests: {Count}/{Limit}", 
-                ipAddress, requestLog.Count, _options.RequestLimit);
+            _logger.LogWarning("Rate limit exceeded for IP: {IpAddress}", ipAddress);
             
             context.Response.StatusCode = StatusCodes.Status429TooManyRequests;
             context.Response.ContentType = "application/json";
@@ -60,7 +68,7 @@ public class RateLimitingMiddleware
             var response = new ApiResponse
             {
                 Success = false,
-                Message = ("Rate limit exceeded. Maximum {_options.RequestLimit} requests per {_options.WindowInSeconds} seconds.", _options.RequestLimit, _options.WindowInSeconds),
+                Message = "Rate limit exceeded. Please try again later.",
                 Errors = new List<string> { "Too many requests" }
             };
             
